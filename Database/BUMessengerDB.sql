@@ -2,7 +2,7 @@ CREATE TABLE "User" (
   "Id" uuid PRIMARY KEY,
   "Name" text NOT NULL,
   "Surname" text NOT NULL,
-  "FatherName" text,
+  "Fathername" text,
   "Gender" enum(male,female) NOT NULL,
   "Email" text UNIQUE NOT NULL,
   "PasswordHashed" text NOT NULL
@@ -30,7 +30,7 @@ CREATE TABLE "ChatUsers" (
 CREATE TABLE "Message" (
   "Id" uuid PRIMARY KEY,
   "ChatId" uuid NOT NULL,
-  "CreatorId" uuid NOT NULL,
+  "CreatorId" uuid,
   "ParentMessageId" uuid,
   "SentAt" timestamp NOT NULL,
   "MessageText" text NOT NULL
