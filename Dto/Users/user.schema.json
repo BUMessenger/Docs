@@ -34,7 +34,7 @@
         "gender": {
             "type": "string",
             "description": "Пол пользователя",
-            "enum": ["Male", "Femail"],
+            "enum": ["Мужской", "Женский"],
             "nullable": false
         },
         "email": {
