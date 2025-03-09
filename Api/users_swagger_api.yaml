@@ -1,0 +1,312 @@
+openapi: 3.0.3
+
+info:
+  version: 1.0.0
+  title: API для работы с пользователями
+
+tags:
+  - name: User
+    description: Пользователь
+
+paths:
+  /api/v1/users:
+    get:
+      tags:
+        - User
+      operationId: getUsers
+      summary: Метод получения списка пользователей
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          required: false
+          description: Имя пользователя
+
+        - in: query
+          name: surname
+          schema:
+            type: string
+          required: false
+          description: Фамилия пользователя
+
+        - in: query
+          name: fathername
+          schema:
+            type: string
+          required: false
+          description: Отчество пользователя
+
+        - in: query
+          name: gender
+          schema:
+            type: string
+            enum: ["Мужской", "Женский"]
+          required: false
+          description: Пол пользователя
+
+        - in: query
+          name: email
+          schema:
+            type: string
+            format: email
+          required: false
+          description: Email пользователя
+
+        - in: query
+          name: chatId
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: Идентификатор чата пользователя
+
+        - in: query
+          name: skip
+          schema:
+            type: integer
+          required: false
+          description: Количество пропускаемых записей (параметр пагинации)
+
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Количество взятых записей (параметр пагинации)
+
+      responses:
+        '200':
+          description: Запрос выполнен успешно
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Users'
+
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              
+
+    post:
+      tags:
+        - User
+      operationId: createUser
+      summary: Метод создания пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '200':
+          description: Запрос выполнен успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        
+        '400':
+          description: Некорректный запрос
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+          
+
+  /api/v1/users/{userId}:
+    get:
+      tags:
+        - User
+      operationId: getUser
+      summary: Метод получения пользователя по идентификатору
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Идентификатор пользователя
+      responses:
+        '200':
+          description: Запрос выполнен успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '404':
+          description: Пользователь не найден
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - User
+      operationId: deleteUser
+      summary: Метод удаления пользователя
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Идентификатор пользователя
+      responses:
+        '200':
+          description: Запрос выполнен успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '404':
+          description: Пользователь не найден
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/users/{userId}/user-name:
+    patch:
+      tags:
+        - User
+      operationId: updateUserName
+      summary: Метод обновления имени пользователя
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Идентификатор пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserNameUpdate'
+      responses:
+        '200':
+          description: Запрос выполнен успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '400':
+          description: Некорректный запрос
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '404':
+          description: Пользователь не найден
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/users/{userId}/password:
+    patch:
+      tags:
+        - User
+      operationId: updatePassword
+      summary: Метод обновления пароля пользователя
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Идентификатор пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPasswordUpdate'
+      responses:
+        '200':
+          description: Запрос выполнен успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '400':
+          description: Некорректный запрос
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '404':
+          description: Пользователь не найден
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    User:
+      $ref: "../Dto/Users/user.schema.json"
+    Users:
+      $ref: "../Dto/Users/users.schema.json"
+    UserCreate:
+      $ref: "../Dto/Users/user-create.schema.json"
+    UserNameUpdate:
+      $ref: "../Dto/Users/user-name-update.schema.json"
+    UserPasswordUpdate:
+      $ref: "../Dto/Users/user-password-update.schema.json"
+    Error:
+      $ref: "../Dto/Common/error.schema.json"
+      
