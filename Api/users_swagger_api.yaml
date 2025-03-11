@@ -130,18 +130,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /api/v1/users/forgot-password:
+  /api/v1/users/password-recovery:
     post:
       tags:
         - User
-      operationId: forgotPassword
+      operationId: passwordRecovery
       summary: Метод сброса пароля пользователя   
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserForgotPassword'
+              $ref: '#/components/schemas/UserPasswordRecovery'
 
       responses: 
         '200':
@@ -391,8 +391,8 @@ components:
       $ref: "../Dto/Users/user-name-update.schema.json"
     UserPasswordUpdate:
       $ref: "../Dto/Users/user-password-update.schema.json"
-    UserForgotPassword:
-      $ref: "../Dto/Users/user-forgot-password.schema.json"
+    UserPasswordRecovery:
+      $ref: "../Dto/Users/user-password-recovery.schema.json"
     Error:
       $ref: "../Dto/Common/error.schema.json"
       
