@@ -83,6 +83,13 @@ paths:
               schema:
                   $ref: '#/components/schemas/Users'
 
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
         '500':
           description: Внутренняя ошибка сервера
           content:
@@ -103,7 +110,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UserCreate'
       responses:
-        '200':
+        '201':
           description: Запрос выполнен успешно
           content:
             application/json:
@@ -124,7 +131,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-          
+  /api/v1/users/forgot-password:
+    post:
+      tags:
+        - User
+      operationId: forgotPassword
+      summary: Метод сброса пароля пользователя   
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserForgotPassword'
+
+      responses: 
+        '200':
+          description: Запрос выполнен успешно 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Сообщение об успешном выполнении запроса
+
+        '400':
+          description: Некорректный запрос
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '404':
+          description: Пользователь не найден
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'  
 
   /api/v1/users/{userId}:
     get:
@@ -147,6 +198,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
         '404':
           description: Пользователь не найден
@@ -176,12 +234,15 @@ paths:
           required: true
           description: Идентификатор пользователя
       responses:
-        '200':
+        '204':
           description: Запрос выполнен успешно
+
+        '401':
+          description: Пользователь не авторизован
           content:
-            application/json:
+            application/problem+json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Error'
 
         '404':
           description: Пользователь не найден
@@ -227,6 +288,13 @@ paths:
 
         '400':
           description: Некорректный запрос
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '401':
+          description: Пользователь не авторизован
           content:
             application/problem+json:
               schema:
@@ -281,6 +349,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
         '404':
           description: Пользователь не найден
           content:
@@ -307,6 +382,8 @@ components:
       $ref: "../Dto/Users/user-name-update.schema.json"
     UserPasswordUpdate:
       $ref: "../Dto/Users/user-password-update.schema.json"
+    UserForgotPassword:
+      $ref: "../Dto/Users/user-forgot-password.schema.json"
     Error:
       $ref: "../Dto/Common/error.schema.json"
       
