@@ -16,6 +16,12 @@ paths:
       operationId: getUsers
       summary: Метод получения списка пользователей
       parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
         - in: query
           name: name
           schema:
@@ -117,13 +123,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
         
-        '400':
-          description: Некорректный запрос
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        
         '500':
           description: Внутренняя ошибка сервера
           content:
@@ -156,13 +155,6 @@ paths:
                     type: string
                     description: Сообщение об успешном выполнении запроса
 
-        '400':
-          description: Некорректный запрос
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
         '404':
           description: Пользователь не найден
           content:
@@ -184,6 +176,12 @@ paths:
       operationId: getUser
       summary: Метод получения пользователя по идентификатору
       parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
         - in: path
           name: userId
           schema:
@@ -226,6 +224,12 @@ paths:
       operationId: deleteUser
       summary: Метод удаления пользователя
       parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
         - in: path
           name: userId
           schema:
@@ -265,6 +269,12 @@ paths:
       operationId: updateUserName
       summary: Метод обновления имени пользователя
       parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
         - in: path
           name: userId
           schema:
@@ -285,13 +295,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-
-        '400':
-          description: Некорректный запрос
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Error'
 
         '401':
           description: Пользователь не авторизован
@@ -321,6 +324,12 @@ paths:
       operationId: updatePassword
       summary: Метод обновления пароля пользователя
       parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
         - in: path
           name: userId
           schema:
