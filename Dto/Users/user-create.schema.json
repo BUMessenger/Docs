@@ -3,34 +3,10 @@
     "description": "Модель создания пользователя",
     "type": "object",
     "required": [
-        "name",
-        "surname",
-        "gender",
         "email",
-        "password"
+        "approveCode"
     ],
     "properties": {
-        "name": {
-            "type": "string",
-            "description": "Имя пользователя",
-            "nullable": false
-        },
-        "surname": {
-            "type": "string",
-            "description": "Фамилия пользователя",
-            "nullable": false
-        },
-        "fathername": {
-            "type": "string",
-            "description": "Отчество пользователя",
-            "nullable": true
-        },
-        "gender": {
-            "type": "string",
-            "description": "Пол пользователя",
-            "enum": ["Мужской", "Женский"],
-            "nullable": false
-        },
         "email": {
             "type": "string",
             "format": "email",
@@ -38,9 +14,9 @@
             "nullable": false,
             "unique": true
         },
-        "password": {
+        "approveCode": {
             "type": "string",
-            "description": "Пароль пользователя",
+            "description": "Код подтверждения",
             "nullable": false
         }
     }
