@@ -3,7 +3,6 @@ CREATE TABLE "User" (
   "Name" text NOT NULL,
   "Surname" text NOT NULL,
   "Fathername" text,
-  "Gender" enum(male,female) NOT NULL,
   "Email" text UNIQUE NOT NULL,
   "PasswordHashed" text NOT NULL
 );
@@ -39,6 +38,7 @@ CREATE TABLE "Message" (
 CREATE TABLE "UnregistredUser" (
   "Id" uuid PRIMARY KEY,
   "Email" text NOT NULL,
+  "PasswordHashed" text NOT NULL,
   "ApproveCode" text NOT NULL,
   "ExpiresAt" timestamp NOT NULL
 );
