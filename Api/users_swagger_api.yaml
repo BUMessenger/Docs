@@ -44,14 +44,6 @@ paths:
           description: Отчество пользователя
 
         - in: query
-          name: gender
-          schema:
-            type: string
-            enum: ["Мужской", "Женский"]
-          required: false
-          description: Пол пользователя
-
-        - in: query
           name: email
           schema:
             type: string
@@ -122,6 +114,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+
+        '403':
+          description: Код 2FA неверный или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '404':
+          description: Временный пользователь с указанным email не найден
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
         
         '500':
           description: Внутренняя ошибка сервера

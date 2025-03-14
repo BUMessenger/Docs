@@ -17,7 +17,8 @@
         "approveCode": {
             "type": "string",
             "description": "Код подтверждения",
-            "nullable": false
+            "nullable": false,
+            "example": "123456"
         }
     }
 }

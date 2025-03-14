@@ -6,7 +6,6 @@
         "id",
         "name",
         "surname",
-        "gender",
         "email"
     ],
     "properties": {
@@ -30,12 +29,6 @@
             "type": "string",
             "description": "Отчество пользователя",
             "nullable": true
-        },
-        "gender": {
-            "type": "string",
-            "description": "Пол пользователя",
-            "enum": ["Мужской", "Женский"],
-            "nullable": false
         },
         "email": {
             "type": "string",
