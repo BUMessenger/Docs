@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель создания временного пользователя",
+    "type": "object",
+    "required": [
+        "email",
+        "password"
+    ],
+    "properties": {
+        "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email пользователя",
+            "nullable": false,
+            "unique": true
+        },
+        "password": {
+            "type": "string",
+            "description": "Пароль пользователя (не хешированный)",
+            "nullable": false,
+            "example": "mySecurePassword123"
+        }
+    }
+}
