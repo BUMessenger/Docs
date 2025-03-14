@@ -1,0 +1,51 @@
+openapi: 3.0.3
+
+info:
+  version: 1.0.0
+  title: API для работы с незарегистрированными пользователями
+
+tags:
+  - name: UnregisteredUser
+    description: Временный пользователь
+
+paths:
+  /api/v1/unregistered-users:
+    post:
+      tags:
+        - UnregisteredUser
+      summary: Создание временного пользователя
+      operationId: createUnregisteredUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnregisteredUserCreate'
+      responses:
+        '201':
+          description: Пользователь успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnregisteredUser'
+        '400':
+          description: Некорректный запрос
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    UnregisteredUserCreate:
+      $ref: "../Dto/UnregisteredUsers/unregistered-user-create.schema.json"
+    UnregisteredUser:
+      $ref: "../Dto/UnregisteredUsers/unregistered-user.schema.json"
+    Error:
+      $ref: "../Dto/Common/error.schema.json"

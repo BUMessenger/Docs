@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель временного пользователя",
+    "type": "object",
+    "required": [
+        "id",
+        "email"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор пользователя",
+            "nullable": false
+        },
+        "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email пользователя",
+            "nullable": false
+        }
+    }
+}
