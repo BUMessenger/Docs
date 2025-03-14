@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель обновления имени пользователя",
+    "type": "object",
+    "required": [
+        "name",
+        "surname",
+        "fathername"
+    ],
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Имя пользователя",
+            "nullable": false
+        },
+        "surname": {
+            "type": "string",
+            "description": "Фамилия пользователя",
+            "nullable": false
+        },
+        "fathername": {
+            "type": "string",
+            "description": "Отчество пользователя",
+            "nullable": false
+        }
+    }
+}
