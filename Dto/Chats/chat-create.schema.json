@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель создания чата",
+    "type": "object",
+    "required": [
+        "chatName",
+        "members"
+    ],
+    "properties": {
+        "chatName": {
+            "type": "string",
+            "description": "Название чата",
+            "nullable": false
+        },
+        "members": {
+            "type": "array",
+            "description": "Список участников чата",
+            "items": {
+                "type": "string",
+                "format": "uuid"
+            },
+            "minItems": 1,
+            "uniqueItems": true,
+            "nullable": false
+        }
+    }
+}

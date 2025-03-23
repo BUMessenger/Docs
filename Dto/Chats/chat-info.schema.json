@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель информации о чате",
+    "type": "object",
+    "required": [
+        "chat",
+        "users"
+    ],
+    "properties": {
+        "chat": {
+            "$ref": "../Chats/chat.schema.json",
+            "description": "Чат",
+            "nullable": false
+        },
+        "users": {
+            "$ref": "../Users/users.schema.json",
+            "description": "Пользователи чата",
+            "nullable": false
+        }
+    }
+}

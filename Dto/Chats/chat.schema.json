@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель чата",
+    "type": "object",
+    "required": [
+        "id",
+        "chatName",
+        "unreadMessagesCount"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор чата",
+            "nullable": false
+        },
+        "chatName": {
+            "type": "string",
+            "description": "Название чата",
+            "nullable": false
+        },
+        "lastMessage": {
+            "$ref": "../Messages/message.schema.json",
+            "description": "Последнее сообщение в чате",
+            "nullable": true
+        },
+        "unreadMessagesCount": {
+            "type": "integer",
+            "description": "Количество непрочитанных сообщений в чате",
+            "nullable": false
+        }
+    }
+}
