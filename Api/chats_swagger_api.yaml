@@ -43,8 +43,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: '#/components/schemas/Chats'
         '401':
           description: Пользователь не авторизован
@@ -230,12 +228,18 @@ paths:
             type: string
           description: Идентификатор чата
 
-        - in: query
-          name: name
-          schema:
-            type: string
+        requestBody:
           required: true
-          description: Новое название чата
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Новое название чата
+                required:
+                  - name
 
       responses:
         '200':
