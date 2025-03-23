@@ -228,18 +228,18 @@ paths:
             type: string
           description: Идентификатор чата
 
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    description: Новое название чата
-                required:
-                  - name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Новое название чата
+              required:
+                - name
 
       responses:
         '200':
@@ -402,7 +402,7 @@ paths:
                 $ref: '#/components/schemas/Error'
         
         '404':
-          description: Тред не найден
+          description: Чат не найден
           content:
             application/json:
               schema:
@@ -479,7 +479,7 @@ paths:
                 $ref: '#/components/schemas/Error'
         
         '404':
-          description: Чат не найден
+          description: Тред не найден
           content:
             application/json:
               schema:
