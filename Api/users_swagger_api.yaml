@@ -88,6 +88,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
         '500':
           description: Внутренняя ошибка сервера
           content:
@@ -113,7 +120,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/AuthResponse'
 
         '403':
           description: Код 2FA неверный или просрочен
@@ -152,14 +159,13 @@ paths:
       responses: 
         '200':
           description: Запрос выполнен успешно 
+
+        '400':
+          description: Некорректный запрос
           content:
-            application/json:
+            application/problem+json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    description: Сообщение об успешном выполнении запроса
+                $ref: '#/components/schemas/Error'
 
         '404':
           description: Пользователь не найден
@@ -210,6 +216,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
         '404':
           description: Пользователь не найден
           content:
@@ -249,6 +262,13 @@ paths:
 
         '401':
           description: Пользователь не авторизован
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '403':
+          description: Refresh token не найден или просрочен
           content:
             application/problem+json:
               schema:
@@ -309,6 +329,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
         '404':
           description: Пользователь не найден
           content:
@@ -357,19 +385,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
 
-        '400':
-          description: Некорректный запрос
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
         '401':
           description: Пользователь не авторизован
           content:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 
         '404':
           description: Пользователь не найден
@@ -399,6 +428,8 @@ components:
       $ref: "../Dto/Users/user-password-update.schema.json"
     UserPasswordRecovery:
       $ref: "../Dto/Users/user-password-recovery.schema.json"
+    AuthResponse:
+      $ref: "../Dto/Auth/auth-response.schema.json"
     Error:
       $ref: "../Dto/Common/error.schema.json"
       
