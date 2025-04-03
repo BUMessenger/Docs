@@ -1,4 +1,4 @@
-CREATE TABLE "User" (
+CREATE TABLE "Users" (
   "Id" uuid PRIMARY KEY,
   "Name" text NOT NULL,
   "Surname" text NOT NULL,
@@ -7,52 +7,52 @@ CREATE TABLE "User" (
   "PasswordHashed" text NOT NULL
 );
 
-CREATE TABLE "AuthToken" (
+CREATE TABLE "AuthTokens" (
   "Id" uuid PRIMARY KEY,
   "UserId" uuid NOT NULL,
   "RefreshToken" text NOT NULL,
-  "ExpiresAt" timestamp NOT NULL
+  "ExpiresAtUtc" timestamp NOT NULL
 );
 
-CREATE TABLE "Chat" (
+CREATE TABLE "Chats" (
   "Id" uuid PRIMARY KEY,
   "ChatName" text NOT NULL
 );
 
-CREATE TABLE "ChatUsers" (
+CREATE TABLE "ChatUserInfos" (
   "Id" uuid PRIMARY KEY,
   "ChatId" uuid NOT NULL,
   "UserId" uuid NOT NULL,
   "LastReadMessageId" uuid
 );
 
-CREATE TABLE "Message" (
+CREATE TABLE "Messages" (
   "Id" uuid PRIMARY KEY,
   "ChatId" uuid NOT NULL,
   "CreatorId" uuid,
   "ParentMessageId" uuid,
-  "SentAt" timestamp NOT NULL,
+  "SentAtUtc" timestamp NOT NULL,
   "MessageText" text NOT NULL
 );
 
-CREATE TABLE "UnregistredUser" (
+CREATE TABLE "UnregisteredUsers" (
   "Id" uuid PRIMARY KEY,
   "Email" text NOT NULL,
   "PasswordHashed" text NOT NULL,
   "ApproveCode" text NOT NULL,
-  "ExpiresAt" timestamp NOT NULL
+  "ExpiresAtUtc" timestamp NOT NULL
 );
 
-ALTER TABLE "AuthToken" ADD FOREIGN KEY ("UserId") REFERENCES "User" ("Id");
+ALTER TABLE "AuthTokens" ADD FOREIGN KEY ("UserId") REFERENCES "Users" ("Id");
 
-ALTER TABLE "ChatUsers" ADD FOREIGN KEY ("ChatId") REFERENCES "Chat" ("Id");
+ALTER TABLE "ChatUserInfos" ADD FOREIGN KEY ("ChatId") REFERENCES "Chats" ("Id");
 
-ALTER TABLE "ChatUsers" ADD FOREIGN KEY ("UserId") REFERENCES "User" ("Id");
+ALTER TABLE "ChatUserInfos" ADD FOREIGN KEY ("UserId") REFERENCES "Users" ("Id");
 
-ALTER TABLE "ChatUsers" ADD FOREIGN KEY ("LastReadMessageId") REFERENCES "Message" ("Id");
+ALTER TABLE "ChatUserInfos" ADD FOREIGN KEY ("LastReadMessageId") REFERENCES "Messages" ("Id");
 
-ALTER TABLE "Message" ADD FOREIGN KEY ("ChatId") REFERENCES "Chat" ("Id");
+ALTER TABLE "Messages" ADD FOREIGN KEY ("ChatId") REFERENCES "Chats" ("Id");
 
-ALTER TABLE "Message" ADD FOREIGN KEY ("CreatorId") REFERENCES "User" ("Id");
+ALTER TABLE "Messages" ADD FOREIGN KEY ("CreatorId") REFERENCES "Users" ("Id");
 
-ALTER TABLE "Message" ADD FOREIGN KEY ("ParentMessageId") REFERENCES "Message" ("Id");
+ALTER TABLE "Messages" ADD FOREIGN KEY ("ParentMessageId") REFERENCES "Messages" ("Id");
