@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель токенов",
+    "type": "object",
+    "required": [
+        "refreshToken"
+    ],
+    "properties": {
+        "refreshToken": {
+            "type": "string",
+            "description": "Refresh токен",
+            "nullable": false,
+            "example": "876ebb63-01c0-4d9b-a1a8-34580361f29f"
+        }
+    }
+}

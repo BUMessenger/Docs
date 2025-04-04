@@ -1,0 +1,157 @@
+openapi: 3.0.3
+
+info:
+  version: 1.0.0
+  title: API для работы с авторизацией
+
+tags:
+  - name: Auth
+    description: Авторизация
+
+paths:
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Auth
+      operationId: login
+      summary: Метод авторизации в системе
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+      responses:
+        '200':
+          description: Запрос выполнен успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+        '403':
+          description: Неверный пароль
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '404':
+          description: Пользователь с указанным email не найден
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/refresh:
+    post:
+      tags:
+        - Auth
+      operationId: refresh
+      summary: Метод обновления refresh токена   
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
+
+      responses: 
+        '200':
+          description: Запрос выполнен успешно 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+        '403':
+          description: Refresh токен не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '404':
+          description: Пользователь не найден
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'  
+
+  /api/v1/auth/logout:
+    post:
+      tags:
+        - Auth
+      operationId: logout
+      summary: Метод выхода из системы  
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
+
+      responses: 
+        '200':
+          description: Запрос выполнен успешно 
+
+        '400':
+          description: Некорректный запрос (refresh токен null или пустая строка)
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '403':
+          description: Refresh токен не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'  
+
+components:
+  schemas:
+    LoginUser:
+      $ref: "../Dto/Auth/login-user.schema.json"
+    AuthResponse:
+      $ref: "../Dto/Auth/auth-response.schema.json"
+    RefreshToken:
+      $ref: "../Dto/Auth/refresh-token.schema.json"
+    Error:
+      $ref: "../Dto/Common/error.schema.json"
+      
