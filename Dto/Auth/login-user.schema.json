@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель авторизации в системе",
+    "type": "object",
+    "required": [
+        "email",
+        "password"
+    ],
+    "properties": {
+        "email": {
+            "type": "string",
+            "description": "Email пользователя",
+            "nullable": false,
+            "example": "aaa@mail.ru"
+        },
+        "password": {
+            "type": "string",
+            "description": "Пароль пользователя",
+            "nullable": false
+        }
+    }
+}

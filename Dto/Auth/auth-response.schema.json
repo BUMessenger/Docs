@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель токенов",
+    "type": "object",
+    "required": [
+        "accessToken",
+        "refreshToken"
+    ],
+    "properties": {
+        "accessToken": {
+            "type": "string",
+            "description": "Access токен",
+            "nullable": false,
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoi0KHQsNC80LDRgNC40L3QsCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL3N1cm5hbWUiOiLQldC60LDRgtC10YDQuNC90LAiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYW1hcmFAZXRlcm4uc3UiLCJSZWZyZXNoVG9rZW5JZCI6IjI3YzRiOTUwLTRhNjQtNDgwMS04Njk4LTE3MTE0ZGQ0NTkxZiIsImV4cCI6MTc0MzcxODM2MCwiaXNzIjoiQlVNZXNzZW5nZXIiLCJhdWQiOiJCVU1lc3NlbmdlciJ9.Tpt51aicwd9mhgMr456i9GZ_4tCF3K0TfwgsrKGMKoM"
+        },
+        "refreshToken": {
+            "type": "string",
+            "description": "Refresh токен",
+            "nullable": false,
+            "example": "876ebb63-01c0-4d9b-a1a8-34580361f29f"
+        }
+    }
+}
