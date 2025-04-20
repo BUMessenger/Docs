@@ -4,7 +4,7 @@
     "type": "object",
     "required": [
         "chatName",
-        "members"
+        "usersIds"
     ],
     "properties": {
         "chatName": {
@@ -12,9 +12,9 @@
             "description": "Название чата",
             "nullable": false
         },
-        "members": {
+        "usersIds": {
             "type": "array",
-            "description": "Список участников чата",
+            "description": "Список идентификаторов пользователей",
             "items": {
                 "type": "string",
                 "format": "uuid"

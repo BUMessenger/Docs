@@ -1,0 +1,167 @@
+openapi: 3.0.3
+
+info:
+  title: API для работы с сообщениями
+  version: 1.0.0
+
+tags:
+  - name: Message
+    description: Сообщение
+
+paths:
+  /api/v1/chats/{chatId}/messages:
+    get:
+      tags:
+        - Message
+      operationId: getMessages
+      summary: Получить список сообщений чата
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
+
+        - in: path
+          name: chatId
+          required: true
+          schema:
+            type: string
+          description: Идентификатор чата
+
+        - in: query
+          name: skip
+          schema:
+            type: integer
+          required: false
+          description: Количество пропускаемых записей (параметр пагинации)
+
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Количество взятых записей (параметр пагинации)
+
+      responses:
+        '200':
+          description: Список сообщений
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Messages'
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '403':
+          description: Доступ запрещен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        
+        '404':
+          description: Чат не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/chats/{chatId}/messages/{parentMessageId}/thread:
+    get:
+      tags:
+        - Message
+      operationId: getThread
+      summary: Получить тред
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
+
+        - in: path
+          name: chatId
+          required: true
+          schema:
+            type: string
+          description: Идентификатор чата
+
+        - in: path
+          name: parentMessageId
+          required: true
+          schema:
+            type: string
+          description: Идентификатор сообщения
+
+        - in: query
+          name: skip
+          schema:
+            type: integer
+          required: false
+          description: Количество пропускаемых записей (параметр пагинации)
+
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Количество взятых записей (параметр пагинации)
+
+      responses:
+        '200':
+          description: Ветка сообщений
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Messages'
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '403':
+          description: Доступ запрещен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        
+        '404':
+          description: Тред не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+components:
+  schemas:
+    Message:
+      $ref: "../Dto/Messages/message.schema.json"
+    Messages:
+      $ref: "../Dto/Messages/messages.schema.json"
+    Error:
+      $ref: "../Dto/Common/error.schema.json"

@@ -43,21 +43,20 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/Chats'
+                $ref: '#/components/schemas/Chats'
         '401':
           description: Пользователь не авторизован
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        
         '500':
           description: Ошибка сервера
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    
+
     post:
       tags:
         - Chat
@@ -85,13 +84,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Chat'
+        '400':
+          description: Некорректные данные для создания чата
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Пользователь не авторизован
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '500':
           description: Ошибка сервера
           content:
@@ -126,28 +136,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChatInfo'
+                $ref: '#/components/schemas/Chat'
         '401':
           description: Пользователь не авторизован
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
         '403':
           description: Доступ запрещен
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        
         '404':
           description: Чат не найден
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        
         '500':
           description: Ошибка сервера
           content:
@@ -158,7 +165,7 @@ paths:
     delete:
       tags:
         - Chat
-      operationId: leveChat
+      operationId: leaveChat
       summary: Покинуть чат
       parameters:
         - in: header
@@ -178,28 +185,18 @@ paths:
       responses:
         '204':
           description: Пользователь вышел из чата
-
         '401':
           description: Пользователь не авторизован
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-        '403':
-          description: Доступ запрещен
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        
         '404':
           description: Чат не найден
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        
         '500':
           description: Ошибка сервера
           content:
@@ -235,11 +232,11 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                chatName:
                   type: string
                   description: Новое название чата
               required:
-                - name
+                - chatName
 
       responses:
         '200':
@@ -248,34 +245,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Chat'
+        '400':
+          description: Некорректные данные для обновления названия
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Пользователь не авторизован
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
         '403':
           description: Доступ запрещен
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        
         '404':
           description: Чат не найден
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        
         '500':
           description: Ошибка сервера
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    
+
   /api/v1/chats/{chatId}/users:
     post:
       tags:
@@ -310,181 +310,36 @@ paths:
                   example: "5f7b1b7b7f7b1b7b7f7b1b7b"
 
       responses:
-        '201':
+        '200':
           description: Пользователь добавлен в чат
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChatUser'
-
+                $ref: '#/components/schemas/User'
         '401':
           description: Пользователь не авторизован
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
         '403':
           description: Доступ запрещен
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        
         '404':
           description: Чат не найден
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        
-        '500':
-          description: Ошибка сервера
+        '409':
+          description: Пользователь уже в чате
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-  /api/v1/chats/{chatId}/messages:
-    get:
-      tags:
-        - Chat
-      operationId: getMessages
-      summary: Получить список сообщений чата
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: string
-          description: Авторизационный токен.
-
-        - in: path
-          name: chatId
-          required: true
-          schema:
-            type: string
-          description: Идентификатор чата
-
-        - in: query
-          name: skip
-          schema:
-            type: integer
-          required: false
-          description: Количество пропускаемых записей (параметр пагинации)
-
-        - in: query
-          name: limit
-          schema:
-            type: integer
-          required: false
-          description: Количество взятых записей (параметр пагинации)
-
-      responses:
-        '200':
-          description: Список сообщений
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Messages'
-        '401':
-          description: Пользователь не авторизован
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-        '403':
-          description: Доступ запрещен
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        
-        '404':
-          description: Чат не найден
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        
-        '500':
-          description: Ошибка сервера
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /api/v1/chats/{chatId}/messages/{messageId}/thread:
-    get:
-      tags:
-        - Chat
-      operationId: getThread
-      summary: Получить тред
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: string
-          description: Авторизационный токен.
-
-        - in: path
-          name: chatId
-          required: true
-          schema:
-            type: string
-          description: Идентификатор чата
-
-        - in: path
-          name: messageId
-          required: true
-          schema:
-            type: string
-          description: Идентификатор сообщения
-
-        - in: query
-          name: skip
-          schema:
-            type: integer
-          required: false
-          description: Количество пропускаемых записей (параметр пагинации)
-
-        - in: query
-          name: limit
-          schema:
-            type: integer
-          required: false
-          description: Количество взятых записей (параметр пагинации)
-
-      responses:
-        '200':
-          description: Ветка сообщений
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Thread'
-        '401':
-          description: Пользователь не авторизован
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-        '403':
-          description: Доступ запрещен
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        
-        '404':
-          description: Тред не найден
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        
         '500':
           description: Ошибка сервера
           content:
@@ -499,17 +354,13 @@ components:
       $ref: "../Dto/Chats/chats.schema.json"
     ChatCreate:
       $ref: "../Dto/Chats/chat-create.schema.json"
-    Chat:
+    ChatSummary:
       $ref: "../Dto/Chats/chat.schema.json"
     ChatUser:
       $ref: "../Dto/Chats/chat-user.schema.json"
-    ChatInfo:
+    Chat:
       $ref: "../Dto/Chats/chat-info.schema.json"
-    Message:
-      $ref: "../Dto/Messages/message.schema.json"
-    Messages:
-      $ref: "../Dto/Messages/messages.schema.json"
-    Thread:
-      $ref: "../Dto/Threads/thread.schema.json"
+    User:
+      $ref: "../Dto/Users/user.schema.json"
     Error:
       $ref: "../Dto/Common/error.schema.json"

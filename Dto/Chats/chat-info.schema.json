@@ -3,19 +3,28 @@
     "description": "Модель информации о чате",
     "type": "object",
     "required": [
-        "chat",
+        "id",
+        "chatName",
         "users"
     ],
     "properties": {
-        "chat": {
-            "$ref": "../Chats/chat.schema.json",
-            "description": "Чат",
+        "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор чата",
+            "nullable": false
+        },
+        "chatName": {
+            "type": "string",
+            "description": "Название чата",
             "nullable": false
         },
         "users": {
-            "$ref": "../Users/users.schema.json",
-            "description": "Пользователи чата",
-            "nullable": false
+            "type": "array",
+            "description": "Список пользователей в чате",
+            "items": {
+                "$ref": "../Users/user.schema.json"
+            }
         }
     }
 }

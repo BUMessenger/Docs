@@ -24,7 +24,7 @@
             "description": "Последнее сообщение в чате",
             "nullable": true
         },
-        "unreadMessagesCount": {
+        "unreadMessagesNumber": {
             "type": "integer",
             "description": "Количество непрочитанных сообщений в чате",
             "nullable": false
