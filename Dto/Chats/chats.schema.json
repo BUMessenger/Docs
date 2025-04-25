@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель списка чатов с пагинацией",
+    "type": "object",
+    "required": [
+        "count",
+        "items"
+    ],
+    "properties": {
+        "count": {
+            "type": "integer",
+            "description": "Количество элементов в выдаче без учета пагинации",
+            "example": 100,
+            "nullable": false
+        },
+        "items": {
+            "type": "array",
+            "description": "Список чатов",
+            "items": {
+                "$ref": "./chat.schema.json"
+            },
+            "nullable": false
+        }
+    }
+}

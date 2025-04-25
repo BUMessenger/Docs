@@ -1,0 +1,386 @@
+openapi: 3.0.3
+
+info:
+  title: API для работы с чатами
+  version: 1.0.0
+
+tags:
+  - name: Chat
+    description: Чат
+
+paths:
+  /api/v1/chats:
+    get:
+      tags:
+        - Chat
+      operationId: getChats
+      summary: Получить список чатов пользователя
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
+
+        - in: query
+          name: skip
+          schema:
+            type: integer
+          required: false
+          description: Количество пропускаемых записей (параметр пагинации)
+
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Количество взятых записей (параметр пагинации)
+
+      responses:
+        '200':
+          description: Список чатов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chats'
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags:
+        - Chat
+      operationId: createChat
+      summary: Создать чат
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCreate'
+
+      responses:
+        '201':
+          description: Чат создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat'
+        '400':
+          description: Пустое название чата
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/chats/{chatId}:
+    get:
+      tags:
+        - Chat
+      operationId: getChat
+      summary: Получить информацию о чате
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
+
+        - in: path
+          name: chatId
+          required: true
+          schema:
+            type: string
+          description: Идентификатор чата
+
+      responses:
+        '200':
+          description: Информация о чате
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat'
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Доступ запрещен или Refresh токен не найден или просрочен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Чат не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Chat
+      operationId: leaveChat
+      summary: Покинуть чат
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
+
+        - in: path
+          name: chatId
+          required: true
+          schema:
+            type: string
+          description: Идентификатор чата
+
+      responses:
+        '204':
+          description: Пользователь вышел из чата
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Чат не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/chats/{chatId}/name:
+    patch:
+      tags:
+        - Chat
+      operationId: updateChat
+      summary: Изменить название чата
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
+
+        - in: path
+          name: chatId
+          required: true
+          schema:
+            type: string
+          description: Идентификатор чата
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chatName:
+                  type: string
+                  description: Новое название чата
+              required:
+                - chatName
+
+      responses:
+        '200':
+          description: Информация о чате обновлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat'
+        '400':
+          description: Пустое обновлённое название чата
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Доступ запрещен или Refresh токен не найден или просрочен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Чат не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/chats/{chatId}/users:
+    post:
+      tags:
+        - Chat
+      operationId: addUserToChat
+      summary: Добавить пользователя в чат
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Авторизационный токен.
+
+        - in: path
+          name: chatId
+          required: true
+          schema:
+            type: string
+          description: Идентификатор чата
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: Идентификатор пользователя
+                  example: "5f7b1b7b7f7b1b7b7f7b1b7b"
+
+      responses:
+        '200':
+          description: Пользователь добавлен в чат
+          content:
+            application/json:
+              schema:
+                type: array 
+                items:
+                  $ref: '#/components/schemas/ChatUser'
+        '401':
+          description: Пользователь не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Доступ запрещен или Refresh токен не найден или просрочен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Чат не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Пользователь уже в чате
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+components:
+  schemas:
+    Chats:
+      $ref: "../Dto/Chats/chats.schema.json"
+    ChatCreate:
+      $ref: "../Dto/Chats/chat-create.schema.json"
+    ChatSummary:
+      $ref: "../Dto/Chats/chat.schema.json"
+    ChatUser:
+      $ref: "../Dto/Chats/chat-user.schema.json"
+    Chat:
+      $ref: "../Dto/Chats/chat-info.schema.json"
+    User:
+      $ref: "../Dto/Users/user.schema.json"
+    Error:
+      $ref: "../Dto/Common/error.schema.json"

@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель информации о чате",
+    "type": "object",
+    "required": [
+        "id",
+        "chatName",
+        "users"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор чата",
+            "nullable": false
+        },
+        "chatName": {
+            "type": "string",
+            "description": "Название чата",
+            "nullable": false
+        },
+        "users": {
+            "type": "array",
+            "description": "Список пользователей в чате",
+            "items": {
+                "$ref": "../Users/user.schema.json"
+            }
+        }
+    }
+}

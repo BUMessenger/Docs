@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель сообщения",
+    "type": "object",
+    "required": [
+        "id",
+        "chatId",
+        "sentAt",
+        "messageText"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор сообщения",
+            "nullable": false
+        },
+        "chatId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор чата, в котором было отправлено сообщение",
+            "nullable": false
+        },
+        "creatorId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор пользователя, который отправил сообщение",
+            "nullable": true
+        },
+        "parentMessageId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор родительского сообщения",
+            "nullable": true
+        },
+        "sentAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Дата и время отправки сообщения",
+            "nullable": false
+        },
+        "messageText": {
+            "type": "string",
+            "description": "Текст сообщения",
+            "nullable": false
+        }
+    }
+}

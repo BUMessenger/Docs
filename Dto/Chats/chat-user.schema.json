@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
+    "description": "Модель пользователя в чате",
+    "type": "object",
+    "required": [
+        "id",
+        "chatId",
+        "userId"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор",
+            "nullable": false
+        },
+        "chatId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор чата",
+            "nullable": false
+        },
+        "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор пользователя",
+            "nullable": false
+        },
+        "lastReadMessageId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Идентификатор последнего прочитанного сообщения",
+            "nullable": true
+        }
+    }
+}
