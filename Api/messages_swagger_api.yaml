@@ -59,7 +59,7 @@ paths:
                 $ref: '#/components/schemas/Error'
 
         '403':
-          description: Доступ запрещен
+          description: Доступ запрещен или Refresh токен не найден или просрочен
           content:
             application/json:
               schema:
@@ -136,7 +136,7 @@ paths:
                 $ref: '#/components/schemas/Error'
 
         '403':
-          description: Доступ запрещен
+          description: Доступ запрещен или Refresh токен не найден или просрочен
           content:
             application/json:
               schema:

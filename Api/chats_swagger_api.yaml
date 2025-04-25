@@ -50,6 +50,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '500':
           description: Ошибка сервера
           content:
@@ -85,7 +91,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Chat'
         '400':
-          description: Некорректные данные для создания чата
+          description: Пустое название чата
           content:
             application/json:
               schema:
@@ -94,6 +100,12 @@ paths:
           description: Пользователь не авторизован
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
         '404':
@@ -144,7 +156,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         '403':
-          description: Доступ запрещен
+          description: Доступ запрещен или Refresh токен не найден или просрочен
           content:
             application/json:
               schema:
@@ -189,6 +201,12 @@ paths:
           description: Пользователь не авторизован
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Refresh token не найден или просрочен
+          content:
+            application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
         '404':
@@ -246,7 +264,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Chat'
         '400':
-          description: Некорректные данные для обновления названия
+          description: Пустое обновлённое название чата
           content:
             application/json:
               schema:
@@ -258,7 +276,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         '403':
-          description: Доступ запрещен
+          description: Доступ запрещен или Refresh токен не найден или просрочен
           content:
             application/json:
               schema:
@@ -315,7 +333,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: array 
+                items:
+                  $ref: '#/components/schemas/ChatUser'
         '401':
           description: Пользователь не авторизован
           content:
@@ -323,7 +343,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         '403':
-          description: Доступ запрещен
+          description: Доступ запрещен или Refresh токен не найден или просрочен
           content:
             application/json:
               schema:
